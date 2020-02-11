@@ -1,9 +1,9 @@
 import React from "react";
 
-import Layout from "./components/layout";
+import LayoutContainer from "./containers/LayoutContainer";
 
 function App() {
-  return <Layout>Kreta</Layout>;
+  return <LayoutContainer>Lorem ipsum</LayoutContainer>;
 }
 
 export default App;

@@ -3,15 +3,19 @@ import React from "react";
 import Header from "../header";
 import Content from "../content";
 import Footer from "../footer";
-import { LayoutContainer } from "./Layout.styles";
+import { LayoutWrapper } from "./Layout.styles";
 
-function Layout({ children }) {
+function Layout({ children, inputHandler, inputValue, submitHandler }) {
   return (
-    <LayoutContainer>
-      <Header />
+    <LayoutWrapper>
+      <Header
+        inputHandler={inputHandler}
+        inputValue={inputValue}
+        submitHandler={submitHandler}
+      />
       <Content>{children}</Content>
       <Footer />
-    </LayoutContainer>
+    </LayoutWrapper>
   );
 }
 

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LayoutContainer = styled.div`
+export const LayoutWrapper = styled.div`
   background-color: #dedede;
   display: flex;
   flex-direction: column;

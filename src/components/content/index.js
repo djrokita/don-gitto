@@ -3,10 +3,10 @@ import React from "react";
 import { ContentContainer } from "./Content.styles";
 import Box from "../box";
 
-function Content() {
+function Content({ children }) {
   return (
     <ContentContainer>
-      <Box>Content</Box>
+      <Box>{children}</Box>
     </ContentContainer>
   );
 }

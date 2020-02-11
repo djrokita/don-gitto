@@ -10,7 +10,7 @@ import {
 } from "./Header.styles";
 import Box from "../box";
 
-function Header() {
+function Header({ inputHandler, inputValue, submitHandler }) {
   return (
     <HeaderContainer>
       <Box>
@@ -18,8 +18,8 @@ function Header() {
           <LogoTitle>Don Gitto</LogoTitle>
         </Logo>
         <Search>
-          <SearchInput />
-          <SearchButton type="submit" value="Search" />
+          <SearchInput onChange={inputHandler} value={inputValue} />
+          <SearchButton type="submit" value="Search" onClick={submitHandler} />
         </Search>
       </Box>
     </HeaderContainer>
