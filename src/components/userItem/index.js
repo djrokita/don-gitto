@@ -6,18 +6,31 @@ import {
   EventSection,
   UserAvatar,
   UserName,
-  UserType
+  UserType,
+  EventsButton
 } from "./UserItem.styles";
+import { fetchEvents } from "../../api/actions";
 
-function UserItem() {
+function UserItem({ user }) {
+  const eventsHandler = user => {
+    console.log("fetch_events");
+    fetchEvents(user);
+  };
+
   return (
     <UserItemContainer>
       <UserSection>
-        <UserAvatar />
-        <UserName>user name</UserName>
-        <UserType>user</UserType>
+        <UserAvatar src={user.avatar_url} alt="user avatar" />
+        <UserName>{user.login}</UserName>
+        <UserType>{user.type}</UserType>
       </UserSection>
-      <EventSection>eventbutton</EventSection>
+      <EventSection>
+        <EventsButton
+          type="button"
+          value="More..."
+          onClick={() => eventsHandler(user.login)}
+        />
+      </EventSection>
     </UserItemContainer>
   );
 }

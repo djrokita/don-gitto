@@ -4,8 +4,19 @@ import Header from "../header";
 import Content from "../content";
 import Footer from "../footer";
 import { LayoutWrapper } from "./Layout.styles";
+import UserItem from "../userItem";
 
-function Layout({ children, inputHandler, inputValue, submitHandler }) {
+function Layout({
+  children,
+  inputHandler,
+  inputValue,
+  submitHandler,
+  members
+}) {
+  const usersElements = members.map(user => (
+    <UserItem user={user} key={user.id} />
+  ));
+
   return (
     <LayoutWrapper>
       <Header
@@ -13,7 +24,7 @@ function Layout({ children, inputHandler, inputValue, submitHandler }) {
         inputValue={inputValue}
         submitHandler={submitHandler}
       />
-      <Content>{children}</Content>
+      <Content members={members}>{usersElements}</Content>
       <Footer />
     </LayoutWrapper>
   );

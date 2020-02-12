@@ -47,3 +47,11 @@ export const UserName = styled.a`
 `;
 
 export const UserType = styled.div``;
+
+export const EventsButton = styled.input`
+  font-size: 1rem;
+  padding: 0.2rem;
+  border-radius: 5px;
+  border: 1px solid #cacae3;
+  min-width: 20%;
+`;
