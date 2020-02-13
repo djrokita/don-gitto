@@ -55,3 +55,8 @@ export const EventsButton = styled.input`
   border: 1px solid #cacae3;
   min-width: 20%;
 `;
+
+export const EventData = styled(Section)`
+  width: 100%;
+  font-size: 0.8rem;
+`;

@@ -8,9 +8,9 @@ export default class LayoutContainer extends Component {
     super(props);
 
     this.state = {
-      input: "",
+      input: "adobe",
       organizations: {},
-      members: []
+      currentLogin: ""
     };
 
     this.submitHandler = this.submitHandler.bind(this);
@@ -21,22 +21,20 @@ export default class LayoutContainer extends Component {
     const { input, organizations } = this.state;
 
     if (organizations[input]) {
-      console.log("organizations", organizations);
-      return this.setState(state => ({ members: organizations[input] }));
+      return this.setState(state => ({ currentLogin: input }));
     }
 
     const { login } = await fetchOrganizations(input);
+    this.setState(state => ({ currentLogin: login }));
 
-    fetchMembers(login).then(members => {
-      const organizations = { ...this.state.organizations, [login]: members };
-      this.setState(state => ({
-        organizations,
-        members
-      }));
-      this.setState(state => ({
-        members
-      }));
-    });
+    if (!organizations[this.state.currentLogin]) {
+      fetchMembers(login).then(members => {
+        const organizations = { ...this.state.organizations, [login]: members };
+        this.setState(state => ({
+          organizations
+        }));
+      });
+    }
   }
 
   inputHandler({ target: { value } }) {
@@ -44,13 +42,14 @@ export default class LayoutContainer extends Component {
   }
 
   render() {
-    const { input, members } = this.state;
+    const { input, currentLogin, organizations } = this.state;
+
     return (
       <Layout
         inputHandler={this.inputHandler}
         inputValue={input}
         submitHandler={this.submitHandler}
-        members={members}
+        members={organizations[currentLogin] || []}
       >
         Lorem
       </Layout>
