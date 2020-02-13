@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import {
   UserItemContainer,
@@ -13,22 +13,20 @@ import {
 import { fetchEvents } from "../../api/actions";
 import { dateFormat, eventTypeFormat } from "../../utils";
 
-function UserItem({ user }) {
-  const [event, setEvent] = useState();
-  const [open, setOpen] = useState();
-
+function UserItem({ user, saveEvent, events }) {
   const eventsHandler = user => {
-    fetchEvents(user).then(([event]) => {
-      if (event) {
-        setEvent(event);
-      } else {
-        setEvent("no data");
-      }
-      setOpen(true);
-    });
+    if (!events[user]) {
+      fetchEvents(user).then(([event]) => {
+        if (event) {
+          saveEvent(user, event);
+        } else {
+          saveEvent(user, "no data");
+        }
+      });
+    }
   };
 
-  const eventContent = () =>
+  const eventContent = event =>
     event !== "no data" ? (
       <>
         <UserName>{dateFormat(event.created_at)}</UserName>
@@ -38,16 +36,20 @@ function UserItem({ user }) {
       event
     );
 
-  const eventItem = () =>
-    open ? (
-      <EventData>{eventContent()}</EventData>
-    ) : (
+  const eventItem = user => {
+    const event = events[user];
+    if (events[user]) {
+      return <EventData>{eventContent(event)}</EventData>;
+    }
+
+    return (
       <EventsButton
         type="button"
         value="More..."
-        onClick={() => eventsHandler(user.login)}
+        onClick={() => eventsHandler(user)}
       />
     );
+  };
 
   return (
     <UserItemContainer>
@@ -56,7 +58,7 @@ function UserItem({ user }) {
         <UserName>{user.login}</UserName>
         <UserType>{user.type}</UserType>
       </UserSection>
-      <EventSection>{eventItem()}</EventSection>
+      <EventSection>{eventItem(user.login)}</EventSection>
     </UserItemContainer>
   );
 }

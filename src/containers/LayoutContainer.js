@@ -4,20 +4,14 @@ import Layout from "../components/layout";
 import { fetchOrganizations, fetchMembers } from "../api/actions";
 
 export default class LayoutContainer extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    input: "adobe",
+    organizations: {},
+    currentLogin: "",
+    events: {}
+  };
 
-    this.state = {
-      input: "adobe",
-      organizations: {},
-      currentLogin: ""
-    };
-
-    this.submitHandler = this.submitHandler.bind(this);
-    this.inputHandler = this.inputHandler.bind(this);
-  }
-
-  async submitHandler() {
+  submitHandler = async () => {
     const { input, organizations } = this.state;
 
     if (organizations[input]) {
@@ -35,14 +29,19 @@ export default class LayoutContainer extends Component {
         }));
       });
     }
-  }
+  };
 
-  inputHandler({ target: { value } }) {
+  inputHandler = async ({ target: { value } }) => {
     this.setState(state => ({ input: value }));
-  }
+  };
+
+  eventsHandler = (user, event) => {
+    const events = { ...this.state.events, [user]: event };
+    this.setState(state => ({ events }));
+  };
 
   render() {
-    const { input, currentLogin, organizations } = this.state;
+    const { input, currentLogin, organizations, events } = this.state;
 
     return (
       <Layout
@@ -50,6 +49,8 @@ export default class LayoutContainer extends Component {
         inputValue={input}
         submitHandler={this.submitHandler}
         members={organizations[currentLogin] || []}
+        eventsHandler={this.eventsHandler}
+        events={events}
       >
         Lorem
       </Layout>

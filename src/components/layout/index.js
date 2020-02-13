@@ -11,10 +11,17 @@ function Layout({
   inputHandler,
   inputValue,
   submitHandler,
-  members
+  members,
+  eventsHandler,
+  events
 }) {
   const usersElements = members.map(user => (
-    <UserItem user={user} key={user.id} />
+    <UserItem
+      user={user}
+      key={user.id}
+      saveEvent={eventsHandler}
+      events={events}
+    />
   ));
 
   return (
