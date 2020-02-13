@@ -1,15 +1,13 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const UserItemContainer = styled.div`
   width: 100%;
   display: flex;
   height: 50px;
-  background-color: #dcf2f7;
-  border-bottom: 1px solid #4d4f4f;
-
-  &:nth-of-type(2n) {
-    background-color: #fff;
-  }
+  background: ${({ theme }) => theme.$primary};
+  box-shadow: 0px 3px 3px -3px rgba(0, 0, 0, 0.75);
+  color: ${({ theme }) => theme.$black};
+  margin: 0.3rem;
 `;
 
 export const Section = styled.div`
@@ -25,7 +23,7 @@ export const UserSection = styled(Section)`
   &::after {
     content: "";
     height: 90%;
-    background-color: #222;
+    background-color: ${({ theme }) => theme.$dark};
     width: 1px;
     position: absolute;
     right: 0;
@@ -39,7 +37,6 @@ export const EventSection = styled(Section)`
 export const UserAvatar = styled.img`
   height: 30px;
   width: 30px;
-  outline: 1px solid green;
 `;
 
 export const UserName = styled.a`

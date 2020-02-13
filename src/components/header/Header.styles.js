@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const HeaderContainer = styled.header`
   width: 100%;
-  background-color: #6e6cd9;
+  background-color: ${({ theme }) => theme.$dark};
   display: flex;
   justify-content: center;
 `;
@@ -15,7 +15,6 @@ export const Logo = styled.div`
 export const LogoTitle = styled.h1`
   font-weight: 600;
   letter-spacing: 2px;
-  color: #fff;
 `;
 
 export const Search = styled.div`
@@ -30,14 +29,16 @@ export const SearchInput = styled.input`
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px solid #cacae3;
-  background-color: #d1d1ed;
+  background-color: ${({ theme }) => theme.$primary};
   width: 60%;
+  letter-spacing: 1px;
 `;
 
 export const SearchButton = styled.input`
   font-size: 1rem;
   padding: 0.5rem;
-  border-radius: 5px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.$primary};
   border: 1px solid #cacae3;
   min-width: 20%;
 `;
