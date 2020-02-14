@@ -1,8 +1,10 @@
+import axios from "axios";
+
 const BASIC_URL = "https://api.github.com/";
 
 export const fetchOrganizations = name => {
   const url = `${BASIC_URL}orgs/${name}`;
-  return fetch(url).then(res => res.json());
+  return axios.get(url);
 };
 
 export const fetchMembers = org => {

@@ -2,33 +2,52 @@ import React, { Component } from "react";
 
 import Layout from "../components/layout";
 import { fetchOrganizations, fetchMembers } from "../api/actions";
+import { ERROR_NOT_FOUND, ERROR_NO_RESPONSE } from "../api/constans";
 
 export default class LayoutContainer extends Component {
   state = {
     input: "adobe",
     organizations: {},
     currentLogin: "",
-    events: {}
+    events: {},
+    error: ""
   };
 
   submitHandler = async () => {
     const { input, organizations } = this.state;
 
+    this.setState({ error: "" });
+
     if (organizations[input]) {
       return this.setState(state => ({ currentLogin: input }));
     }
 
-    const { login } = await fetchOrganizations(input);
-    this.setState(state => ({ currentLogin: login }));
+    fetchOrganizations(input)
+      .then(({ data: { login } }) => {
+        this.setState(state => ({ currentLogin: login }));
 
-    if (!organizations[this.state.currentLogin]) {
-      fetchMembers(login).then(members => {
-        const organizations = { ...this.state.organizations, [login]: members };
+        if (!organizations[login]) {
+          fetchMembers(login).then(members => {
+            const organizations = {
+              ...this.state.organizations,
+              [login]: members
+            };
+            this.setState(state => ({
+              organizations
+            }));
+          });
+        }
+      })
+      .catch(({ response: { statusText } }) => {
+        if (statusText === ERROR_NOT_FOUND) {
+          return this.setState(state => ({
+            error: "Sorry, cannot find your organization"
+          }));
+        }
         this.setState(state => ({
-          organizations
+          error: "Sorry, something went wrong"
         }));
       });
-    }
   };
 
   inputHandler = async ({ target: { value } }) => {
@@ -41,7 +60,7 @@ export default class LayoutContainer extends Component {
   };
 
   render() {
-    const { input, currentLogin, organizations, events } = this.state;
+    const { input, currentLogin, organizations, events, error } = this.state;
 
     return (
       <Layout
@@ -51,6 +70,7 @@ export default class LayoutContainer extends Component {
         members={organizations[currentLogin] || []}
         eventsHandler={this.eventsHandler}
         events={events}
+        error={error}
       >
         Lorem
       </Layout>

@@ -13,7 +13,8 @@ function Layout({
   submitHandler,
   members,
   eventsHandler,
-  events
+  events,
+  error
 }) {
   const usersElements = members.map(user => (
     <UserItem
@@ -31,7 +32,9 @@ function Layout({
         inputValue={inputValue}
         submitHandler={submitHandler}
       />
-      <Content members={members}>{usersElements}</Content>
+      <Content members={members} msg={error}>
+        {usersElements}
+      </Content>
       <Footer />
     </LayoutWrapper>
   );

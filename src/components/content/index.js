@@ -1,14 +1,28 @@
 import React from "react";
 
-import { ContentContainer } from "./Content.styles";
+import {
+  ContentContainer,
+  ResultsContainer,
+  OrganizationAside,
+  MembersSection
+} from "./Content.styles";
 import Box from "../box";
+import Message from "../message";
 
-function Content({ children }) {
+function Content({ children, msg }) {
+  const displayContent = () =>
+    msg ? (
+      <Message msg={msg} />
+    ) : (
+      <ResultsContainer>
+        <OrganizationAside />
+        <MembersSection>{children}</MembersSection>
+      </ResultsContainer>
+    );
+
   return (
     <ContentContainer>
-      <Box column color="red">
-        {children}
-      </Box>
+      <Box>{displayContent()}</Box>
     </ContentContainer>
   );
 }
