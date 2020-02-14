@@ -5,4 +5,5 @@ export const BoxContainer = styled.main`
   min-width: 1200px;
   display: flex;
   flex-direction: ${props => props.column && "column"};
+  align-content: stretch;
 `;
