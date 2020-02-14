@@ -15,6 +15,8 @@ export default class LayoutContainer extends Component {
 
   submitHandler = async () => {
     const { input, organizations } = this.state;
+    let login;
+    let members;
 
     this.setState({ error: "" });
 
@@ -22,32 +24,45 @@ export default class LayoutContainer extends Component {
       return this.setState(state => ({ currentLogin: input }));
     }
 
-    fetchOrganizations(input)
-      .then(({ data: { login } }) => {
-        this.setState(state => ({ currentLogin: login }));
+    try {
+      login = await fetchOrganizations(input);
+      this.setState(state => ({ currentLogin: login }));
+    } catch ({ response: { statusText } }) {
+      if (statusText === ERROR_NOT_FOUND) {
+        return this.setState(state => ({
+          error: "Sorry, cannot find your organization"
+        }));
+      }
+      this.setState(state => ({
+        error: "Sorry, something went wrong"
+      }));
+    }
 
-        if (!organizations[login]) {
-          fetchMembers(login).then(members => {
-            const organizations = {
-              ...this.state.organizations,
-              [login]: members
-            };
-            this.setState(state => ({
-              organizations
-            }));
-          });
-        }
-      })
-      .catch(({ response: { statusText } }) => {
+    if (!organizations[login]) {
+      try {
+        members = await fetchMembers(login);
+        const organizations = {
+          ...this.state.organizations,
+          [login]: members
+        };
+        this.setState(state => ({
+          organizations
+        }));
+      } catch ({ response: { statusText } }) {
         if (statusText === ERROR_NOT_FOUND) {
           return this.setState(state => ({
-            error: "Sorry, cannot find your organization"
+            error: "Sorry, cannot find organization's members"
           }));
         }
         this.setState(state => ({
           error: "Sorry, something went wrong"
         }));
-      });
+      }
+    }
+
+    if (!members.length) {
+      this.setState({ error: "Public members are not available" });
+    }
   };
 
   inputHandler = async ({ target: { value } }) => {

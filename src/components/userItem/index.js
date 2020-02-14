@@ -14,27 +14,35 @@ import { fetchEvents } from "../../api/actions";
 import { dateFormat, eventTypeFormat } from "../../utils";
 
 function UserItem({ user, saveEvent, events }) {
-  const eventsHandler = user => {
-    if (!events[user]) {
-      fetchEvents(user).then(([event]) => {
-        if (event) {
-          saveEvent(user, event);
-        } else {
-          saveEvent(user, "no data");
-        }
-      });
+  const fetchEventsHandler = async user => {
+    try {
+      const eventsResponse = await fetchEvents(user);
+      if (eventsResponse.length) {
+        return saveEvent(user, eventsResponse[0]);
+      }
+      saveEvent(user, "no events");
+    } catch ({ response: { statusText } }) {
+      saveEvent(user, "no data available");
     }
   };
 
-  const eventContent = event =>
-    event !== "no data" ? (
+  const eventsHandler = user => {
+    if (!events[user]) {
+      fetchEventsHandler(user);
+    }
+  };
+
+  const eventContent = event => {
+    if (event === "no events" || event === "no data available") {
+      return event;
+    }
+    return (
       <>
         <UserName>{dateFormat(event.created_at)}</UserName>
         <UserType>{eventTypeFormat(event.type)}</UserType>
       </>
-    ) : (
-      event
     );
+  };
 
   const eventItem = user => {
     const event = events[user];

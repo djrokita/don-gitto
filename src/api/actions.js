@@ -4,15 +4,15 @@ const BASIC_URL = "https://api.github.com/";
 
 export const fetchOrganizations = name => {
   const url = `${BASIC_URL}orgs/${name}`;
-  return axios.get(url);
+  return axios.get(url).then(({ data: { login } }) => login);
 };
 
 export const fetchMembers = org => {
   const url = `${BASIC_URL}orgs/${org}/public_members`;
-  return fetch(url).then(res => res.json());
+  return axios.get(url).then(({ data }) => data);
 };
 
 export const fetchEvents = user => {
   const url = `${BASIC_URL}users/${user}/events/public`;
-  return fetch(url).then(res => res.json());
+  return axios.get(url).then(({ data }) => data);
 };
