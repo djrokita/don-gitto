@@ -10,7 +10,7 @@ import {
 } from "./Header.styles";
 import Box from "../box";
 
-function Header({ inputHandler, inputValue, submitHandler }) {
+function Header({ inputHandler, inputValue, submitHandler, processing }) {
   return (
     <HeaderContainer>
       <Box>
@@ -19,7 +19,12 @@ function Header({ inputHandler, inputValue, submitHandler }) {
         </Logo>
         <Search>
           <SearchInput onChange={inputHandler} value={inputValue} />
-          <SearchButton type="submit" value="Search" onClick={submitHandler} />
+          <SearchButton
+            type="submit"
+            value="Search"
+            onClick={submitHandler}
+            disabled={processing}
+          />
         </Search>
       </Box>
     </HeaderContainer>

@@ -10,7 +10,8 @@ export default class LayoutContainer extends Component {
     organizations: {},
     currentLogin: "",
     events: {},
-    error: ""
+    error: "",
+    processing: false
   };
 
   submitHandler = async () => {
@@ -24,38 +25,51 @@ export default class LayoutContainer extends Component {
       return this.setState(state => ({ currentLogin: input }));
     }
 
+    this.setState({ processing: true });
+
     try {
       login = await fetchOrganizations(input);
       this.setState(state => ({ currentLogin: login }));
     } catch ({ response: { statusText } }) {
+      const processing = false;
       if (statusText === ERROR_NOT_FOUND) {
         return this.setState(state => ({
-          error: "Sorry, cannot find your organization"
+          error: "Sorry, cannot find your organization",
+          processing
         }));
       }
-      this.setState(state => ({
-        error: "Sorry, something went wrong"
+
+      return this.setState(state => ({
+        error: "Sorry, something went wrong",
+        processing
       }));
     }
 
     if (!organizations[login]) {
+      const processing = false;
+
       try {
         members = await fetchMembers(login);
         const organizations = {
           ...this.state.organizations,
           [login]: members
         };
+
         this.setState(state => ({
-          organizations
+          organizations,
+          processing
         }));
       } catch ({ response: { statusText } }) {
         if (statusText === ERROR_NOT_FOUND) {
           return this.setState(state => ({
-            error: "Sorry, cannot find organization's members"
+            error: "Sorry, cannot find organization's members",
+            processing
           }));
         }
-        this.setState(state => ({
-          error: "Sorry, something went wrong"
+
+        return this.setState(state => ({
+          error: "Sorry, something went wrong",
+          processing
         }));
       }
     }
@@ -75,7 +89,14 @@ export default class LayoutContainer extends Component {
   };
 
   render() {
-    const { input, currentLogin, organizations, events, error } = this.state;
+    const {
+      input,
+      currentLogin,
+      organizations,
+      events,
+      error,
+      processing
+    } = this.state;
 
     return (
       <Layout
@@ -86,6 +107,7 @@ export default class LayoutContainer extends Component {
         eventsHandler={this.eventsHandler}
         events={events}
         error={error}
+        processing={processing}
       >
         Lorem
       </Layout>

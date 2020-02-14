@@ -8,17 +8,25 @@ import {
 } from "./Content.styles";
 import Box from "../box";
 import Message from "../message";
+import Spinner from "../spinner";
 
-function Content({ children, msg }) {
-  const displayContent = () =>
-    msg ? (
-      <Message msg={msg} />
-    ) : (
+function Content({ children, msg, processing }) {
+  const displayContent = () => {
+    if (processing) {
+      return <Spinner />;
+    }
+
+    if (msg) {
+      return <Message msg={msg} />;
+    }
+
+    return (
       <ResultsContainer>
         <OrganizationAside />
         <MembersSection>{children}</MembersSection>
       </ResultsContainer>
     );
+  };
 
   return (
     <ContentContainer>
