@@ -1,10 +1,14 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfo } from "@fortawesome/free-solid-svg-icons";
 
 import {
   UserItemContainer,
   UserSection,
   EventSection,
+  UserAvatarContainer,
   UserAvatar,
+  UserContainer,
   UserName,
   UserType,
   EventsButton,
@@ -51,20 +55,24 @@ function UserItem({ user, saveEvent, events }) {
     }
 
     return (
-      <EventsButton
-        type="button"
-        value="More..."
-        onClick={() => eventsHandler(user)}
-      />
+      <EventsButton type="button" onClick={() => eventsHandler(user)}>
+        <FontAwesomeIcon icon={faInfo} />
+      </EventsButton>
     );
   };
 
   return (
     <UserItemContainer>
       <UserSection>
-        <UserAvatar src={user.avatar_url} alt="user avatar" />
-        <UserName>{user.login}</UserName>
-        <UserType>{user.type}</UserType>
+        <UserAvatarContainer>
+          <UserAvatar src={user.avatar_url} alt="user avatar" />
+        </UserAvatarContainer>
+        <UserContainer>
+          <UserName href={user.html_url} target="_blank">
+            {user.login}
+          </UserName>
+          <UserType>{user.type}</UserType>
+        </UserContainer>
       </UserSection>
       <EventSection>{eventItem(user.login)}</EventSection>
     </UserItemContainer>

@@ -43,7 +43,7 @@ export const PaginationButton = styled.button`
   padding: 5px 0;
   border-color: ${({ theme }) => theme.$dark};
   will-change: background-color, border-color;
-  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  transition: background-color 0.2s, border-color 0.2s;
   transition-timing-function: ease-in;
 
   &:hover {
