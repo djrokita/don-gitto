@@ -1,5 +1,9 @@
 import React from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronLeft,
+  faChevronRight
+} from "@fortawesome/free-solid-svg-icons";
 import {
   ContentContainer,
   ResultsContainer,
@@ -29,8 +33,12 @@ function Content({ children, msg, processing, page, paginationHandler }) {
           <MembersSection>
             {children}
             <PaginationContainer>
-              <PaginationButton />
-              <PaginationButton />
+              <PaginationButton onClick={paginationHandler}>
+                <FontAwesomeIcon icon={faChevronLeft} />
+              </PaginationButton>
+              <PaginationButton onClick={() => paginationHandler("next")}>
+                <FontAwesomeIcon icon={faChevronRight} />
+              </PaginationButton>
             </PaginationContainer>
           </MembersSection>
         </ResultsContainer>
@@ -40,13 +48,7 @@ function Content({ children, msg, processing, page, paginationHandler }) {
 
   return (
     <ContentContainer>
-      <Box>
-        <PaginationContainer>
-          <PaginationButton onClick={paginationHandler} />
-          <PaginationButton onClick={() => paginationHandler("next")} />
-        </PaginationContainer>
-        {displayContent()}
-      </Box>
+      <Box>{displayContent()}</Box>
     </ContentContainer>
   );
 }
