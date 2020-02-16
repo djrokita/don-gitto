@@ -7,8 +7,8 @@ import { ERROR_NOT_FOUND, ERROR_NO_RESPONSE } from "../api/constans";
 export default class LayoutContainer extends Component {
   state = {
     input: "",
-    organization: {},
     organizations: {},
+    members: {},
     currentLogin: "",
     events: {},
     error: "",
@@ -20,17 +20,17 @@ export default class LayoutContainer extends Component {
     const processing = false;
 
     try {
-      const members = await fetchMembers({ login, page });
-      const organizations = {
-        ...this.state.organizations,
-        [login]: members
+      const membersData = await fetchMembers({ login, page });
+      const members = {
+        ...this.state.members,
+        [login]: membersData
       };
 
       this.setState(state => ({
-        organizations,
+        members,
         processing
       }));
-      return members;
+      return membersData;
     } catch ({ response: { statusText } }) {
       if (statusText === ERROR_NOT_FOUND) {
         return this.setState(state => ({
@@ -48,13 +48,13 @@ export default class LayoutContainer extends Component {
 
   submitHandler = async e => {
     e.preventDefault();
-    const { input, organizations } = this.state;
+    const { input, members } = this.state;
     let login;
-    let members = [];
+    let membersData = [];
 
     this.setState({ error: "", page: 1 });
 
-    if (organizations[input]) {
+    if (members[input]) {
       return this.setState(state => ({ currentLogin: input }));
     }
 
@@ -63,9 +63,13 @@ export default class LayoutContainer extends Component {
     try {
       const organization = await fetchOrganizations(input);
       login = organization.login;
+      const organizations = {
+        ...this.state.organizations,
+        [login]: organization
+      };
       this.setState(state => ({
         currentLogin: login,
-        organization,
+        organizations,
         input: ""
       }));
     } catch ({ response: { statusText } }) {
@@ -83,12 +87,11 @@ export default class LayoutContainer extends Component {
       }));
     }
 
-    if (!organizations[login]) {
-      members = await this.fetchMembersHandler({ login, page: 1 });
-      // this.setState({ currentLogin: "" });
+    if (!members[login]) {
+      membersData = await this.fetchMembersHandler({ login, page: 1 });
     }
 
-    if (!members.length) {
+    if (!membersData.length) {
       this.setState({ error: "Public members are not available" });
     }
   };
@@ -121,12 +124,12 @@ export default class LayoutContainer extends Component {
     const {
       input,
       currentLogin,
-      organizations,
+      members,
       events,
       error,
       processing,
       page,
-      organization
+      organizations
     } = this.state;
 
     return (
@@ -134,14 +137,14 @@ export default class LayoutContainer extends Component {
         inputHandler={this.inputHandler}
         inputValue={input}
         submitHandler={this.submitHandler}
-        members={organizations[currentLogin] || []}
+        members={members[currentLogin] || []}
         eventsHandler={this.eventsHandler}
         events={events}
         error={error}
         processing={processing}
         paginationHandler={this.paginationHandler}
         page={page}
-        organization={organization}
+        organization={organizations[currentLogin]}
       >
         Lorem
       </Layout>
