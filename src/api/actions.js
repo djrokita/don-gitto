@@ -4,13 +4,13 @@ const BASIC_URL = "https://api.github.com/";
 
 export const fetchOrganizations = name => {
   const url = `${BASIC_URL}orgs/${name}`;
-  return axios.get(url).then(({ data: { login } }) => login);
+  return axios.get(url).then(({ data }) => data);
 };
 
 export const fetchMembers = ({ login, page }) => {
   const url = `${BASIC_URL}orgs/${login}/public_members`;
   return axios
-    .get(url, { params: { page, per_page: 15 } })
+    .get(url, { params: { page, per_page: 30 } })
     .then(({ data }) => data);
 };
 

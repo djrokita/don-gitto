@@ -17,9 +17,10 @@ function Layout({
   error,
   processing,
   paginationHandler,
-  page
+  page,
+  organization
 }) {
-  const usersElements = members.map(user => (
+  const usersElements = members.map((user, index) => (
     <UserItem
       user={user}
       key={user.id}
@@ -42,6 +43,7 @@ function Layout({
         processing={processing}
         paginationHandler={paginationHandler}
         page={page}
+        organization={organization}
       >
         {usersElements}
       </Content>

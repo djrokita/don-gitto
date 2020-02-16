@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { UserName } from "../userItem/UserItem.styles";
+
 export const ContentContainer = styled.section`
   display: flex;
   flex: 1 0 auto;
@@ -9,22 +11,59 @@ export const ContentContainer = styled.section`
 
 export const ResultsContainer = styled.div`
   display: flex;
-  outline: 1px solid blue;
   width: 100%;
+  align-items: center;
 `;
 
 export const OrganizationAside = styled.aside`
-  outline: 1px solid red;
+  padding: 1rem;
   width: 30%;
   margin: 0.3rem;
+  color: initial;
+  font-size: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const OrganizationItemsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  margin-bottom: 1rem 0;
+`;
+
+export const OrganizationName = styled.h2``;
+
+export const OrganizationDesc = styled.p`
+  margin: 1rem 0;
+`;
+
+export const OrganizationLink = styled(UserName)`
+  display: block;
+  width: 100%;
+  margin: 1rem 0;
+
+  &:hover {
+    &::after {
+      height: 2px;
+    }
+  }
+`;
+
+export const OrganizationAvatar = styled.img`
+  width: 60%;
+  height: auto;
+`;
+
+export const OrganizationItem = styled.div`
+  margin-left: 15px;
 `;
 
 export const MembersSection = styled.main`
   width: 70%;
-  display: flex;
-  /* height: 600px; */
+  height: calc(100vh - 140px);
   flex-direction: column;
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
 `;
 
 export const PaginationContainer = styled.div`

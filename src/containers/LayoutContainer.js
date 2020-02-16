@@ -6,7 +6,8 @@ import { ERROR_NOT_FOUND, ERROR_NO_RESPONSE } from "../api/constans";
 
 export default class LayoutContainer extends Component {
   state = {
-    input: "adobe",
+    input: "twitter",
+    organization: {},
     organizations: {},
     currentLogin: "",
     events: {},
@@ -60,8 +61,9 @@ export default class LayoutContainer extends Component {
     this.setState({ processing: true });
 
     try {
-      login = await fetchOrganizations(input);
-      this.setState(state => ({ currentLogin: login }));
+      const organization = await fetchOrganizations(input);
+      login = organization.login;
+      this.setState(state => ({ currentLogin: login, organization }));
     } catch ({ response: { statusText } }) {
       const processing = false;
       if (statusText === ERROR_NOT_FOUND) {
@@ -119,7 +121,8 @@ export default class LayoutContainer extends Component {
       events,
       error,
       processing,
-      page
+      page,
+      organization
     } = this.state;
 
     return (
@@ -134,6 +137,7 @@ export default class LayoutContainer extends Component {
         processing={processing}
         paginationHandler={this.paginationHandler}
         page={page}
+        organization={organization}
       >
         Lorem
       </Layout>

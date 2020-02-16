@@ -18,7 +18,7 @@ import {
 import { fetchEvents } from "../../api/actions";
 import { dateFormat, eventTypeFormat } from "../../utils";
 
-function UserItem({ user, saveEvent, events }) {
+function UserItem({ user, saveEvent, events, index }) {
   const fetchEventsHandler = async user => {
     try {
       const eventsResponse = await fetchEvents(user);

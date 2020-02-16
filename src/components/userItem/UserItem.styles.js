@@ -2,11 +2,22 @@ import styled from "styled-components";
 
 export const UserItemContainer = styled.div`
   display: flex;
-  height: 50px;
+  height: 60px;
   background-color: rgba(215, 204, 200, 0.4);
   box-shadow: 0px 3px 3px -3px rgba(0, 0, 0, 0.75);
   color: ${({ theme }) => theme.$black};
-  margin: 0.3rem;
+  margin: 0.8rem;
+  animation: fadeIn 0.2s ease-in;
+  letter-spacing: 2px;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `;
 
 export const Section = styled.div`
@@ -40,8 +51,8 @@ export const UserAvatarContainer = styled.div`
 `;
 
 export const UserAvatar = styled.img`
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
   vertical-align: middle;
   border: 1px solid;
   border-color: ${({ theme }) => theme.$primary};
@@ -53,6 +64,7 @@ export const UserContainer = styled.div`
   padding-left: 1rem;
   padding-right: 3rem;
   justify-content: space-between;
+  font-size: 1.2rem;
 `;
 
 export const UserName = styled.a`
@@ -84,10 +96,11 @@ export const UserName = styled.a`
 export const UserType = styled.div``;
 
 export const EventsButton = styled.button`
-  font-size: 1rem;
-  padding: 0.2rem 0.5rem;
+  font-size: 1.2rem;
+  padding: 0.2rem 0.8rem;
   border-radius: 5px;
-  border: 1px solid #cacae3;
+  border: 1px solid;
+  border-color: ${({ theme }) => theme.$secondary};
   background-color: ${({ theme }) => theme.$secondary};
   color: ${({ theme }) => theme.$light};
   transition: background-color 0.2s, border-color 0.2s;
@@ -95,13 +108,15 @@ export const EventsButton = styled.button`
 
   &:hover {
     background-color: ${({ theme }) => theme.$dark};
+    border-color: ${({ theme }) => theme.$dark};
   }
 `;
 
 export const EventData = styled(Section)`
   width: 100%;
-  font-size: 0.9rem;
+  font-size: 1rem;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
 `;
 
