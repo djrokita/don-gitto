@@ -6,7 +6,7 @@ import { ERROR_NOT_FOUND, ERROR_NO_RESPONSE } from "../api/constans";
 
 export default class LayoutContainer extends Component {
   state = {
-    input: "twitter",
+    input: "",
     organization: {},
     organizations: {},
     currentLogin: "",
@@ -63,7 +63,11 @@ export default class LayoutContainer extends Component {
     try {
       const organization = await fetchOrganizations(input);
       login = organization.login;
-      this.setState(state => ({ currentLogin: login, organization }));
+      this.setState(state => ({
+        currentLogin: login,
+        organization,
+        input: ""
+      }));
     } catch ({ response: { statusText } }) {
       const processing = false;
       if (statusText === ERROR_NOT_FOUND) {

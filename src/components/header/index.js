@@ -20,7 +20,11 @@ function Header({ inputHandler, inputValue, submitHandler, processing }) {
           <LogoTitle>Don Gitto</LogoTitle>
         </Logo>
         <SearchForm onSubmit={submitHandler}>
-          <SearchInput onChange={inputHandler} value={inputValue} />
+          <SearchInput
+            onChange={inputHandler}
+            value={inputValue}
+            placeholder="Github organization"
+          />
           <SearchButton type="submit" disabled={processing}>
             <FontAwesomeIcon icon={faSearch} />
           </SearchButton>
