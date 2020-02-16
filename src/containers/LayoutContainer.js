@@ -103,8 +103,11 @@ export default class LayoutContainer extends Component {
     } else {
       page -= 1;
     }
-    this.fetchMembersHandler({ login: this.state.currentLogin, page });
-    this.setState(state => ({ page }));
+
+    if (page > 0) {
+      this.fetchMembersHandler({ login: this.state.currentLogin, page });
+      this.setState(state => ({ page }));
+    }
   };
 
   render() {

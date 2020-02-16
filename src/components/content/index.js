@@ -33,10 +33,16 @@ function Content({ children, msg, processing, page, paginationHandler }) {
           <MembersSection>
             {children}
             <PaginationContainer>
-              <PaginationButton onClick={paginationHandler}>
+              <PaginationButton
+                onClick={paginationHandler}
+                disabled={page <= 1}
+              >
                 <FontAwesomeIcon icon={faChevronLeft} />
               </PaginationButton>
-              <PaginationButton onClick={() => paginationHandler("next")}>
+              <PaginationButton
+                onClick={() => paginationHandler("next")}
+                disabled={children.length < 15}
+              >
                 <FontAwesomeIcon icon={faChevronRight} />
               </PaginationButton>
             </PaginationContainer>
@@ -45,7 +51,6 @@ function Content({ children, msg, processing, page, paginationHandler }) {
       );
     }
   };
-
   return (
     <ContentContainer>
       <Box>{displayContent()}</Box>
