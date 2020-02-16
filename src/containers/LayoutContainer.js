@@ -11,15 +11,46 @@ export default class LayoutContainer extends Component {
     currentLogin: "",
     events: {},
     error: "",
-    processing: false
+    processing: false,
+    page: 1
+  };
+
+  fetchMembersHandler = async ({ login, page }) => {
+    const processing = false;
+
+    try {
+      const members = await fetchMembers({ login, page });
+      const organizations = {
+        ...this.state.organizations,
+        [login]: members
+      };
+
+      this.setState(state => ({
+        organizations,
+        processing
+      }));
+      return members;
+    } catch ({ response: { statusText } }) {
+      if (statusText === ERROR_NOT_FOUND) {
+        return this.setState(state => ({
+          error: "Sorry, cannot find organization's members",
+          processing
+        }));
+      }
+
+      return this.setState(state => ({
+        error: "Sorry, something went wrong",
+        processing
+      }));
+    }
   };
 
   submitHandler = async () => {
     const { input, organizations } = this.state;
     let login;
-    let members;
+    let members = [];
 
-    this.setState({ error: "" });
+    this.setState({ error: "", page: 1 });
 
     if (organizations[input]) {
       return this.setState(state => ({ currentLogin: input }));
@@ -46,32 +77,8 @@ export default class LayoutContainer extends Component {
     }
 
     if (!organizations[login]) {
-      const processing = false;
-
-      try {
-        members = await fetchMembers(login);
-        const organizations = {
-          ...this.state.organizations,
-          [login]: members
-        };
-
-        this.setState(state => ({
-          organizations,
-          processing
-        }));
-      } catch ({ response: { statusText } }) {
-        if (statusText === ERROR_NOT_FOUND) {
-          return this.setState(state => ({
-            error: "Sorry, cannot find organization's members",
-            processing
-          }));
-        }
-
-        return this.setState(state => ({
-          error: "Sorry, something went wrong",
-          processing
-        }));
-      }
+      members = await this.fetchMembersHandler({ login, page: 1 });
+      // this.setState({ currentLogin: "" });
     }
 
     if (!members.length) {
@@ -88,6 +95,18 @@ export default class LayoutContainer extends Component {
     this.setState(state => ({ events }));
   };
 
+  paginationHandler = direction => {
+    let { page } = this.state;
+
+    if (direction === "next") {
+      page += 1;
+    } else {
+      page -= 1;
+    }
+    this.fetchMembersHandler({ login: this.state.currentLogin, page });
+    this.setState(state => ({ page }));
+  };
+
   render() {
     const {
       input,
@@ -95,7 +114,8 @@ export default class LayoutContainer extends Component {
       organizations,
       events,
       error,
-      processing
+      processing,
+      page
     } = this.state;
 
     return (
@@ -108,6 +128,8 @@ export default class LayoutContainer extends Component {
         events={events}
         error={error}
         processing={processing}
+        paginationHandler={this.paginationHandler}
+        page={page}
       >
         Lorem
       </Layout>

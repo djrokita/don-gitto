@@ -7,9 +7,11 @@ export const fetchOrganizations = name => {
   return axios.get(url).then(({ data: { login } }) => login);
 };
 
-export const fetchMembers = org => {
-  const url = `${BASIC_URL}orgs/${org}/public_members`;
-  return axios.get(url).then(({ data }) => data);
+export const fetchMembers = ({ login, page }) => {
+  const url = `${BASIC_URL}orgs/${login}/public_members`;
+  return axios
+    .get(url, { params: { page, per_page: 15 } })
+    .then(({ data }) => data);
 };
 
 export const fetchEvents = user => {

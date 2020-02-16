@@ -4,13 +4,15 @@ import {
   ContentContainer,
   ResultsContainer,
   OrganizationAside,
-  MembersSection
+  MembersSection,
+  PaginationContainer,
+  PaginationButton
 } from "./Content.styles";
 import Box from "../box";
 import Message from "../message";
 import Spinner from "../spinner";
 
-function Content({ children, msg, processing }) {
+function Content({ children, msg, processing, page, paginationHandler }) {
   const displayContent = () => {
     if (processing) {
       return <Spinner />;
@@ -20,17 +22,31 @@ function Content({ children, msg, processing }) {
       return <Message msg={msg} />;
     }
 
-    return (
-      <ResultsContainer>
-        <OrganizationAside />
-        <MembersSection>{children}</MembersSection>
-      </ResultsContainer>
-    );
+    if (children.length) {
+      return (
+        <ResultsContainer>
+          <OrganizationAside />
+          <MembersSection>
+            {children}
+            <PaginationContainer>
+              <PaginationButton />
+              <PaginationButton />
+            </PaginationContainer>
+          </MembersSection>
+        </ResultsContainer>
+      );
+    }
   };
 
   return (
     <ContentContainer>
-      <Box>{displayContent()}</Box>
+      <Box>
+        <PaginationContainer>
+          <PaginationButton onClick={paginationHandler} />
+          <PaginationButton onClick={() => paginationHandler("next")} />
+        </PaginationContainer>
+        {displayContent()}
+      </Box>
     </ContentContainer>
   );
 }
