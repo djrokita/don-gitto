@@ -45,7 +45,8 @@ export default class LayoutContainer extends Component {
     }
   };
 
-  submitHandler = async () => {
+  submitHandler = async e => {
+    e.preventDefault();
     const { input, organizations } = this.state;
     let login;
     let members = [];

@@ -11,7 +11,6 @@ export const UserItemContainer = styled.div`
 
 export const Section = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
 `;
 
@@ -31,7 +30,7 @@ export const UserSection = styled(Section)`
 
 export const EventSection = styled(Section)`
   width: 30%;
-  justify-content: space-around;
+  justify-content: center;
 `;
 
 export const UserAvatarContainer = styled.div`
@@ -50,7 +49,6 @@ export const UserAvatar = styled.img`
 
 export const UserContainer = styled.div`
   display: flex;
-  /* outline: 1px solid green; */
   width: 80%;
   padding-left: 1rem;
   padding-right: 3rem;
@@ -102,5 +100,9 @@ export const EventsButton = styled.button`
 
 export const EventData = styled(Section)`
   width: 100%;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-around;
 `;
+
+export const EventItem = styled.div``;

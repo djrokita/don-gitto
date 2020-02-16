@@ -12,7 +12,8 @@ import {
   UserName,
   UserType,
   EventsButton,
-  EventData
+  EventData,
+  EventItem
 } from "./UserItem.styles";
 import { fetchEvents } from "../../api/actions";
 import { dateFormat, eventTypeFormat } from "../../utils";
@@ -42,8 +43,8 @@ function UserItem({ user, saveEvent, events }) {
     }
     return (
       <>
-        <UserName>{dateFormat(event.created_at)}</UserName>
-        <UserType>{eventTypeFormat(event.type)}</UserType>
+        <EventItem>{dateFormat(event.created_at)}</EventItem>
+        <EventItem>{eventTypeFormat(event.type)}</EventItem>
       </>
     );
   };
@@ -55,7 +56,7 @@ function UserItem({ user, saveEvent, events }) {
     }
 
     return (
-      <EventsButton type="button" onClick={() => eventsHandler(user)}>
+      <EventsButton onClick={() => eventsHandler(user)}>
         <FontAwesomeIcon icon={faInfo} />
       </EventsButton>
     );

@@ -1,9 +1,11 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import {
   HeaderContainer,
   Logo,
-  Search,
+  SearchForm,
   LogoTitle,
   SearchInput,
   SearchButton
@@ -17,15 +19,12 @@ function Header({ inputHandler, inputValue, submitHandler, processing }) {
         <Logo>
           <LogoTitle>Don Gitto</LogoTitle>
         </Logo>
-        <Search>
+        <SearchForm onSubmit={submitHandler}>
           <SearchInput onChange={inputHandler} value={inputValue} />
-          <SearchButton
-            type="submit"
-            value="Search"
-            onClick={submitHandler}
-            disabled={processing}
-          />
-        </Search>
+          <SearchButton type="submit" disabled={processing}>
+            <FontAwesomeIcon icon={faSearch} />
+          </SearchButton>
+        </SearchForm>
       </Box>
     </HeaderContainer>
   );

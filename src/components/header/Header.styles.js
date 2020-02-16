@@ -18,7 +18,7 @@ export const LogoTitle = styled.h1`
   margin: 0;
 `;
 
-export const Search = styled.div`
+export const SearchForm = styled.form`
   width: 50%;
   display: flex;
   align-items: center;
@@ -36,7 +36,7 @@ export const SearchInput = styled.input`
   letter-spacing: 1px;
 `;
 
-export const SearchButton = styled.input`
+export const SearchButton = styled.button`
   font-size: 1rem;
   padding: 0.5rem;
   border-radius: 10px;
