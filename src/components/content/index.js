@@ -10,7 +10,8 @@ import {
   OrganizationAside,
   MembersSection,
   PaginationContainer,
-  PaginationButton
+  PaginationButton,
+  PaginationNumber
 } from "./Content.styles";
 import Box from "../box";
 import Message from "../message";
@@ -45,6 +46,7 @@ function Content({ children, msg, processing, page, paginationHandler }) {
               >
                 <FontAwesomeIcon icon={faChevronRight} />
               </PaginationButton>
+              <PaginationNumber>Page {page}</PaginationNumber>
             </PaginationContainer>
           </MembersSection>
         </ResultsContainer>

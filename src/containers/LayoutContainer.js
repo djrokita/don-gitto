@@ -105,8 +105,8 @@ export default class LayoutContainer extends Component {
     }
 
     if (page > 0) {
+      this.setState(state => ({ page, processing: true }));
       this.fetchMembersHandler({ login: this.state.currentLogin, page });
-      this.setState(state => ({ page }));
     }
   };
 

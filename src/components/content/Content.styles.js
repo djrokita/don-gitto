@@ -29,9 +29,9 @@ export const MembersSection = styled.main`
 
 export const PaginationContainer = styled.div`
   width: 100%;
-  outline: 1px solid red;
   display: flex;
   justify-content: center;
+  position: relative;
 `;
 
 export const PaginationButton = styled.button`
@@ -45,10 +45,16 @@ export const PaginationButton = styled.button`
   will-change: background-color, border-color;
   transition: background-color 0.2s, border-color 0.2s, color 0.2s;
   transition-timing-function: ease-in;
-  position: relative;
 
   &:hover {
     background-color: ${({ theme }) => theme.$dark};
     border-color: ${({ theme }) => theme.$light};
   }
+`;
+
+export const PaginationNumber = styled.p`
+  color: initial;
+  padding: 0 10px;
+  position: absolute;
+  right: 12%;
 `;
