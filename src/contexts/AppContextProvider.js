@@ -2,7 +2,12 @@ import React, { Component, createContext } from "react";
 
 import Layout from "../components/layout";
 import { fetchOrganizations, fetchMembers } from "../api/actions";
-import { ERROR_NOT_FOUND } from "../api/constans";
+import {
+  ERROR_NOT_FOUND,
+  ERROR_NO_ORGANIZATION,
+  ERROR_NO_MEMBERS,
+  ERROR_NO_RESPONSE
+} from "../api/constants";
 
 export const AppContext = createContext();
 
@@ -36,13 +41,13 @@ export default class AppContextProvider extends Component {
     } catch ({ response: { statusText } }) {
       if (statusText === ERROR_NOT_FOUND) {
         return this.setState(state => ({
-          error: "Sorry, cannot find organization's members",
+          error: ERROR_NO_MEMBERS,
           processing
         }));
       }
 
       return this.setState(state => ({
-        error: "Sorry, something went wrong",
+        error: ERROR_NO_RESPONSE,
         processing
       }));
     }
@@ -51,7 +56,6 @@ export default class AppContextProvider extends Component {
   submitHandler = async e => {
     e.preventDefault();
     const { input, members } = this.state;
-    console.log("TCL: input", input);
     let login;
     let membersData = [];
 
@@ -79,13 +83,13 @@ export default class AppContextProvider extends Component {
       const processing = false;
       if (statusText === ERROR_NOT_FOUND) {
         return this.setState(state => ({
-          error: "Sorry, cannot find your organization",
+          error: ERROR_NO_ORGANIZATION,
           processing
         }));
       }
 
       return this.setState(state => ({
-        error: "Sorry, something went wrong",
+        error: ERROR_NO_RESPONSE,
         processing
       }));
     }
@@ -95,7 +99,7 @@ export default class AppContextProvider extends Component {
     }
 
     if (!membersData.length) {
-      this.setState({ error: "Public members are not available" });
+      this.setState({ error: ERROR_NO_MEMBERS });
     }
   };
 
