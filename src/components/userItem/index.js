@@ -19,7 +19,7 @@ import { fetchEvents } from "../../api/actions";
 import { dateFormat, eventTypeFormat } from "../../utils";
 import { ERROR_NO_DATA, MSG_NO_EVENTS } from "../../api/constants";
 
-function UserItem({ user, saveEvent, events, index }) {
+function UserItem({ user, saveEvent, events }) {
   const fetchEventsHandler = async user => {
     try {
       const eventsResponse = await fetchEvents(user);
@@ -42,6 +42,7 @@ function UserItem({ user, saveEvent, events, index }) {
     if (event === MSG_NO_EVENTS || event === ERROR_NO_DATA) {
       return event;
     }
+
     return (
       <>
         <EventItem>{dateFormat(event.created_at)}</EventItem>
