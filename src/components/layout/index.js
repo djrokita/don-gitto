@@ -7,7 +7,7 @@ import { LayoutWrapper } from "./Layout.styles";
 import UserItem from "../userItem";
 
 function Layout({ members, eventsHandler, events }) {
-  const usersElements = members.map((user, index) => (
+  const usersElements = members.map(user => (
     <UserItem
       user={user}
       key={user.id}

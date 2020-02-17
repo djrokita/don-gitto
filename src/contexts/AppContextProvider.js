@@ -33,23 +33,24 @@ export default class AppContextProvider extends Component {
         [login]: membersData
       };
 
-      this.setState(state => ({
+      this.setState({
         members,
         processing
-      }));
+      });
+
       return membersData;
     } catch ({ response: { statusText } }) {
       if (statusText === ERROR_NOT_FOUND) {
-        return this.setState(state => ({
+        return this.setState({
           error: ERROR_NO_MEMBERS,
           processing
-        }));
+        });
       }
 
-      return this.setState(state => ({
+      return this.setState({
         error: ERROR_NO_RESPONSE,
         processing
-      }));
+      });
     }
   };
 
@@ -62,7 +63,7 @@ export default class AppContextProvider extends Component {
     this.setState({ error: "", page: 1 });
 
     if (members[input]) {
-      return this.setState(state => ({ currentLogin: input }));
+      return this.setState({ currentLogin: input });
     }
 
     this.setState({ processing: true });
@@ -74,24 +75,25 @@ export default class AppContextProvider extends Component {
         ...this.state.organizations,
         [login]: organization
       };
-      this.setState(state => ({
+
+      this.setState({
         currentLogin: login,
         organizations,
         input: ""
-      }));
+      });
     } catch ({ response: { statusText } }) {
       const processing = false;
       if (statusText === ERROR_NOT_FOUND) {
-        return this.setState(state => ({
+        return this.setState({
           error: ERROR_NO_ORGANIZATION,
           processing
-        }));
+        });
       }
 
-      return this.setState(state => ({
+      return this.setState({
         error: ERROR_NO_RESPONSE,
         processing
-      }));
+      });
     }
 
     if (!members[login]) {
@@ -104,12 +106,12 @@ export default class AppContextProvider extends Component {
   };
 
   inputHandler = async ({ target: { value } }) => {
-    this.setState(state => ({ input: value }));
+    this.setState({ input: value });
   };
 
   eventsHandler = (user, event) => {
     const events = { ...this.state.events, [user]: event };
-    this.setState(state => ({ events }));
+    this.setState({ events });
   };
 
   paginationHandler = direction => {
@@ -122,7 +124,7 @@ export default class AppContextProvider extends Component {
     }
 
     if (page > 0) {
-      this.setState(state => ({ page, processing: true }));
+      this.setState({ page, processing: true });
       this.fetchMembersHandler({ login: this.state.currentLogin, page });
     }
   };

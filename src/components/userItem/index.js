@@ -17,6 +17,7 @@ import {
 } from "./UserItem.styles";
 import { fetchEvents } from "../../api/actions";
 import { dateFormat, eventTypeFormat } from "../../utils";
+import { ERROR_NO_DATA, MSG_NO_EVENTS } from "../../api/constants";
 
 function UserItem({ user, saveEvent, events, index }) {
   const fetchEventsHandler = async user => {
@@ -25,9 +26,9 @@ function UserItem({ user, saveEvent, events, index }) {
       if (eventsResponse.length) {
         return saveEvent(user, eventsResponse[0]);
       }
-      saveEvent(user, "no events");
-    } catch ({ response: { statusText } }) {
-      saveEvent(user, "no data available");
+      saveEvent(user, MSG_NO_EVENTS);
+    } catch (err) {
+      saveEvent(user, ERROR_NO_DATA);
     }
   };
 
@@ -38,7 +39,7 @@ function UserItem({ user, saveEvent, events, index }) {
   };
 
   const eventContent = event => {
-    if (event === "no events" || event === "no data available") {
+    if (event === MSG_NO_EVENTS || event === ERROR_NO_DATA) {
       return event;
     }
     return (
