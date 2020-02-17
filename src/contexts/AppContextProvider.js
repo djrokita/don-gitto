@@ -1,10 +1,12 @@
-import React, { Component } from "react";
+import React, { Component, createContext } from "react";
 
 import Layout from "../components/layout";
 import { fetchOrganizations, fetchMembers } from "../api/actions";
-import { ERROR_NOT_FOUND, ERROR_NO_RESPONSE } from "../api/constans";
+import { ERROR_NOT_FOUND } from "../api/constans";
 
-export default class LayoutContainer extends Component {
+export const AppContext = createContext();
+
+export default class AppContextProvider extends Component {
   state = {
     input: "",
     organizations: {},
@@ -49,6 +51,7 @@ export default class LayoutContainer extends Component {
   submitHandler = async e => {
     e.preventDefault();
     const { input, members } = this.state;
+    console.log("TCL: input", input);
     let login;
     let membersData = [];
 
@@ -122,32 +125,29 @@ export default class LayoutContainer extends Component {
 
   render() {
     const {
-      input,
-      currentLogin,
-      members,
-      events,
-      error,
-      processing,
-      page,
-      organizations
-    } = this.state;
+      submitHandler,
+      inputHandler,
+      paginationHandler,
+      eventsHandler,
+      state: { currentLogin, members, events, organizations }
+    } = this;
 
     return (
-      <Layout
-        inputHandler={this.inputHandler}
-        inputValue={input}
-        submitHandler={this.submitHandler}
-        members={members[currentLogin] || []}
-        eventsHandler={this.eventsHandler}
-        events={events}
-        error={error}
-        processing={processing}
-        paginationHandler={this.paginationHandler}
-        page={page}
-        organization={organizations[currentLogin]}
+      <AppContext.Provider
+        value={{
+          ...this.state,
+          submitHandler,
+          inputHandler,
+          paginationHandler,
+          organization: organizations[currentLogin]
+        }}
       >
-        Lorem
-      </Layout>
+        <Layout
+          members={members[currentLogin] || []}
+          eventsHandler={eventsHandler}
+          events={events}
+        ></Layout>
+      </AppContext.Provider>
     );
   }
 }

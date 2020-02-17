@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
@@ -6,6 +6,7 @@ import {
   faCity,
   faEnvelope
 } from "@fortawesome/free-solid-svg-icons";
+
 import {
   ContentContainer,
   ResultsContainer,
@@ -24,22 +25,24 @@ import {
 import Box from "../box";
 import Message from "../message";
 import Spinner from "../spinner";
+import { AppContext } from "../../contexts/AppContextProvider";
 
-function Content({
-  children,
-  msg,
-  processing,
-  page,
-  paginationHandler,
-  organization
-}) {
+function Content({ children }) {
+  const {
+    error,
+    processing,
+    page,
+    paginationHandler,
+    organization
+  } = useContext(AppContext);
+
   const displayContent = () => {
     if (processing) {
       return <Spinner />;
     }
 
-    if (msg) {
-      return <Message msg={msg} />;
+    if (error) {
+      return <Message msg={error} />;
     }
 
     if (children.length) {

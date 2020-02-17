@@ -6,20 +6,7 @@ import Footer from "../footer";
 import { LayoutWrapper } from "./Layout.styles";
 import UserItem from "../userItem";
 
-function Layout({
-  children,
-  inputHandler,
-  inputValue,
-  submitHandler,
-  members,
-  eventsHandler,
-  events,
-  error,
-  processing,
-  paginationHandler,
-  page,
-  organization
-}) {
+function Layout({ members, eventsHandler, events }) {
   const usersElements = members.map((user, index) => (
     <UserItem
       user={user}
@@ -31,22 +18,8 @@ function Layout({
 
   return (
     <LayoutWrapper>
-      <Header
-        inputHandler={inputHandler}
-        inputValue={inputValue}
-        submitHandler={submitHandler}
-        processing={processing}
-      />
-      <Content
-        members={members}
-        msg={error}
-        processing={processing}
-        paginationHandler={paginationHandler}
-        page={page}
-        organization={organization}
-      >
-        {usersElements}
-      </Content>
+      <Header />
+      <Content>{usersElements}</Content>
       <Footer />
     </LayoutWrapper>
   );

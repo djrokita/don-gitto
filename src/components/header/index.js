@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
@@ -11,8 +11,13 @@ import {
   SearchButton
 } from "./Header.styles";
 import Box from "../box";
+import { AppContext } from "../../contexts/AppContextProvider";
 
-function Header({ inputHandler, inputValue, submitHandler, processing }) {
+function Header() {
+  const { inputHandler, inputValue, submitHandler, processing } = useContext(
+    AppContext
+  );
+
   return (
     <HeaderContainer>
       <Box>
