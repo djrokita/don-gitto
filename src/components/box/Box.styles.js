@@ -6,4 +6,5 @@ export const BoxContainer = styled.main`
   display: flex;
   flex-direction: ${props => props.column && "column"};
   align-content: stretch;
+  padding: 15px;
 `;

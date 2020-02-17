@@ -9,7 +9,6 @@ export const HeaderContainer = styled.header`
 
 export const Logo = styled.div`
   width: 50%;
-  padding: 1rem;
 `;
 
 export const LogoTitle = styled.h1`

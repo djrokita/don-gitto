@@ -29,19 +29,18 @@ export const OrganizationAside = styled.aside`
 export const OrganizationItemsContainer = styled.div`
   width: 100%;
   display: flex;
-  margin-bottom: 1rem 0;
+  margin-bottom: 0;
 `;
 
 export const OrganizationName = styled.h2``;
 
 export const OrganizationDesc = styled.p`
-  margin: 1rem 0;
+  margin: 1.1rem 0;
 `;
 
 export const OrganizationLink = styled(UserName)`
   display: block;
-  width: 100%;
-  margin: 1rem 0;
+  margin: 1.1rem 0;
 
   &:hover {
     &::after {
@@ -61,7 +60,7 @@ export const OrganizationItem = styled.div`
 
 export const MembersSection = styled.main`
   width: 70%;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 168px);
   flex-direction: column;
   overflow-y: scroll;
 `;

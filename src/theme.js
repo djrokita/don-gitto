@@ -4,5 +4,6 @@ export default {
   $dark: "#a69b97",
   $black: "#000",
   $secondary: "#3e2723",
-  $alert: "#e57373"
+  $alert: "#e57373",
+  $heart: "#f52020"
 };
